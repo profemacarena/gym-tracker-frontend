@@ -6,6 +6,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { provideHttpClient } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+import { SharedModule } from './shared/shared.module';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,7 @@ import { AboutComponent } from './about/about.component';
     NavbarComponent,
     HomeComponent,
     AboutComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
