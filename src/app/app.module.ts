@@ -5,22 +5,19 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { provideHttpClient } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
 import { SharedModule } from './shared/shared.module';
 import { FooterComponent } from './shared/footer/footer.component';
 import { WorkoutModule } from './workout/workout.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     HomeComponent,
-    AboutComponent,
-    FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,SharedModule,RouterModule
   ],
   exports:[],
   providers: [provideHttpClient()],
