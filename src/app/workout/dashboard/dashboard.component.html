@@ -1,0 +1,34 @@
+<header class="sticky top-0 left-0 w-full bg-teal-950 bg-opacity-0 transition duration-300 shadow-md z-50">
+    <nav class="w-full flex items-center justify-between px-6 py-4 relative">
+        <div class="flex items-center space-x-4">
+          <img src="/favicon.png" width="50px">
+          <a routerLink="/workout/dashboard" class="text-lg text-white font-bold">Hola, {{user?.name}}</a>
+        </div>
+    
+        <div class="hidden md:flex justify-center space-x-6">
+          <a routerLink="/about" class="text-white hover:text-gray-400 transition">Crear entrenamiento</a>
+          <a routerLink="/contact" class="text-white hover:text-gray-400 transition">Contacto</a>
+        </div>
+    
+        <div class="hidden md:flex justify-end">
+          <a class="bg-teal-600 text-white p-3 rounded-xl hover:bg-teal-700 transition text-md font-semibold" routerLink="/auth/login">
+            Cerrar sesión
+          </a>
+        </div>
+    
+        <input type="checkbox" id="menu-toggle" class="peer hidden">
+        <label for="menu-toggle" class="md:hidden text-white text-2xl cursor-pointer">☰</label>
+    
+        <div class="absolute top-full left-0 w-full bg-teal-950 flex-col items-center gap-4 p-4 
+                    opacity-0 scale-95 -translate-y-4 hidden peer-checked:flex peer-checked:opacity-100 
+                    peer-checked:scale-100 peer-checked:translate-y-0 transition-all duration-300 ease-in-out">
+          <a routerLink="/about" class="text-white py-2">Crear entrenamiento</a>
+          <a routerLink="/contact" class="text-white py-2">Contacto</a>
+          <a (click)="logout()" class="bg-teal-600 text-white px-4 py-2 rounded-lg mt-2">
+            Cerrar sesión
+          </a>
+        </div>
+      </nav>
+    
+      <label for="menu-toggle" class="fixed inset-0 peer-checked:block hidden"></label>
+</header>

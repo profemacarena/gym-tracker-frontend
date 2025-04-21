@@ -1,39 +1,94 @@
-<header class="sticky top-0 left-0 w-full bg-teal-950 bg-opacity-0 transition duration-300 shadow-md z-50">
-    <nav class="w-full flex items-center justify-center px-6 py-4 relative">
-      <a href="/">
-        <img src="favicon.png" alt="" width="50px">
-      </a>
-    </nav>
-  </header>
-  
-  <div class="pt-10 flex justify-center mx-auto">
-    <p class="text-2xl font-bold text-teal-500">Bienvenido/a a GymTracker</p>
-  </div>
-  <div class="h-screen flex justify-center mx-auto mt-5">
-    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="form flex flex-col space-y-4 w-full max-w-md">
-      <span class="input-span">
-        <label for="email" class="label block text-gray-700">Correo electrónico</label>
-        <input
-          type="email"
-          formControlName="email"
-          class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
-      </span>
-      <span class="input-span">
-        <label for="password" class="label block text-gray-700">Contraseña</label>
-        <input
-          type="password"
-          formControlName="password"
-          class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
-      </span>
+<header
+  class="sticky top-0 left-0 w-full bg-teal-950 bg-opacity-0 transition duration-300 shadow-md z-50"
+>
+  <nav class="w-full flex items-center justify-center px-6 py-4 relative">
+    <a href="/">
+      <img src="favicon.png" alt="" width="50px" />
+    </a>
+  </nav>
+</header>
+
+<div class="pt-10 flex justify-center">
+  <p class="text-3xl font-bold text-teal-600">Bienvenido/a a GymTracker</p>
+</div>
+
+<div class="flex justify-center mt-8 mb-5">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onLoginSubmit()"
+    class="w-full max-w-lg bg-white p-8 rounded-xl shadow-lg space-y-6"
+  >
+    <!-- EMAIL -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700 mb-1"
+        >Correo electrónico</label
+      >
       <input
-        class="submit bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition duration-300 cursor-pointer"
-        type="submit"
-        value="Iniciar sesión"
+        type="email"
+        name="email"
+        formControlName="email"
+        placeholder="tucorreo@ejemplo.com"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:outline-none"
       />
-      <span class="span text-white">
-        ¿No tienes cuenta? <a href="/auth/register" class="text-teal-600 hover:underline">Regístrate</a>
-      </span>
-    </form>
-  </div>
+      <div
+        *ngIf="
+          loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+        "
+        class="text-red-600 text-sm mt-1"
+      >
+        <span *ngIf="loginForm.get('email')?.errors?.['required']"
+          >El correo es obligatorio.</span
+        >
+        <span *ngIf="loginForm.get('email')?.errors?.['email']"
+          >Formato de correo inválido.</span
+        >
+      </div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-700 mb-1"
+        >Contraseña</label
+      >
+      <input
+        type="password"
+        name="password"
+        formControlName="password"
+        placeholder="Tu contraseña"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:outline-none"
+      />
+      <div
+        *ngIf="
+          loginForm.get('password')?.touched &&
+          loginForm.get('password')?.invalid
+        "
+        class="text-red-600 text-sm mt-1"
+      >
+        <span *ngIf="loginForm.get('password')?.errors?.['required']"
+          >La contraseña es obligatoria.</span
+        >
+        <span *ngIf="loginForm.get('password')?.errors?.['minlength']"
+          >Debe tener al menos 6 caracteres.</span
+        >
+      </div>
+    </div>
+    <div class="text-right text-sm">
+      <a routerLink="/auth/forgot-password" class="text-teal-600 hover:underline">¿Has olvidado tu contraseña?</a>
+    </div>
+    
+
+    <button
+      type="submit"
+      class="w-full bg-teal-600 text-white font-semibold py-2 rounded-md hover:bg-teal-700 transition duration-300"
+    >
+      Iniciar sesión
+    </button>
+
+    <p class="text-center text-sm text-gray-600">
+      ¿No tienes cuenta?
+      <a href="/auth/register" class="text-teal-600 hover:underline font-medium"
+        >Regístrate</a
+      >
+    </p>
+  </form>
+</div>
