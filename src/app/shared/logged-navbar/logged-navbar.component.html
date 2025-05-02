@@ -1,0 +1,59 @@
+<header class="sticky top-0 left-0 w-full bg-teal-950 bg-opacity-0 transition duration-300 shadow-md z-50">
+    <nav class="w-full flex items-center justify-between px-6 py-4 relative">
+        <div class="flex items-center space-x-4">
+          <img src="/favicon.png" width="50px">
+          <a routerLink="/workout/dashboard" class="text-lg text-white font-bold">Hola, {{user?.name}}</a>
+        </div>
+    
+        <div class="hidden md:flex items-center justify-center gap-1">
+          <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+            <path d="M4 12H20M12 4V20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <a routerLink="/workout/new" class="text-white hover:text-gray-400 transition">
+            Crear entrenamiento
+          </a>
+        </div>
+        <div class="hidden md:flex items-center justify-center gap-1">
+          <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M6 7.5H7.5V11.25V12.75V16.5H6V7.5ZM9 12.75V18H4.5V16.5H1.5V7.5H4.5V6H9V11.25L15 11.25V6H19.5V7.5L22.5 7.5V16.5H19.5V18H15V12.75L9 12.75ZM16.5 12.75L16.5 16.5H18L18 7.5L16.5 7.5L16.5 11.25V12.75ZM4.5 9H3V15H4.5V9ZM19.5 15H21V9H19.5V15Z" fill="#ffffff"></path> </g></svg>
+          <a routerLink="/workout/mine" class="text-white hover:text-gray-400 transition">
+            Mis entrenamientos
+          </a>
+        </div>
+        
+    
+        <div class="hidden md:flex justify-end">
+          <a class="bg-teal-600 text-white p-3 rounded-xl hover:bg-teal-700 transition text-md font-semibold" routerLink="/auth/login">
+            Cerrar sesión
+          </a>
+        </div>
+    
+        <input type="checkbox" id="menu-toggle" class="peer hidden">
+        <label for="menu-toggle" class="md:hidden text-white text-2xl cursor-pointer">☰</label>
+    
+        <div class="absolute top-full left-0 w-full bg-teal-950 flex-col items-center gap-4 p-4 
+        opacity-0 scale-95 -translate-y-4 hidden peer-checked:flex peer-checked:opacity-100 
+        peer-checked:scale-100 peer-checked:translate-y-0 transition-all duration-300 ease-in-out">
+
+        <div class="flex items-center gap-2 text-white py-2">
+        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+          <path d="M4 12H20M12 4V20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <a routerLink="/workout/new" class="hover:text-gray-400 transition">
+          Crear entrenamiento
+        </a>
+        </div>
+        <div class="flex items-center gap-2 text-white py-2">
+          <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M6 7.5H7.5V11.25V12.75V16.5H6V7.5ZM9 12.75V18H4.5V16.5H1.5V7.5H4.5V6H9V11.25L15 11.25V6H19.5V7.5L22.5 7.5V16.5H19.5V18H15V12.75L9 12.75ZM16.5 12.75L16.5 16.5H18L18 7.5L16.5 7.5L16.5 11.25V12.75ZM4.5 9H3V15H4.5V9ZM19.5 15H21V9H19.5V15Z" fill="#ffffff"></path> </g></svg>
+          <a routerLink="/workout/mine" class="text-white hover:text-gray-400 transition">
+            Mis entrenamientos
+          </a>
+          </div>
+
+        <a (click)="logout()" class="bg-teal-600 text-white px-4 py-2 rounded-lg mt-2">
+        Cerrar sesión
+        </a>
+        </div>
+
+      </nav>
+      <label for="menu-toggle" class="fixed inset-0 peer-checked:block hidden"></label>
+</header>

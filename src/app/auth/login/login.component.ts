@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
       this.authService.login(email,password).subscribe({
         next:(user)=>{
           this.notify.success('Login Correcto');
-          console.log('Usuario logeado: ',user);
           setTimeout(() => {
             this.router.navigate(['/workout/']);
           }, 1000);

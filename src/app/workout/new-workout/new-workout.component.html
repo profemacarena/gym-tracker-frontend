@@ -1,0 +1,122 @@
+<app-logged-navbar></app-logged-navbar>
+<div class="min-h-screen flex flex-col">
+  <main class="flex-1 p-4">
+    <div class="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
+      <form [formGroup]="entrenamientoForm" (ngSubmit)="onSubmit()">
+        <!-- Nombre -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">Nombre del entrenamiento</label>
+          <input
+            formControlName="name"
+            type="text"
+            placeholder="Ej: Pecho-Triceps"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+          />
+        </div>
+
+        <!-- Tipo -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">Tipo</label>
+          <input
+            formControlName="type"
+            type="text"
+            placeholder="Ej: Fuerza"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+          />
+        </div>
+
+        <!-- Tren -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">Tren</label>
+          <input
+            formControlName="train"
+            type="text"
+            placeholder="Ej: Superior"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+          />
+        </div>
+
+        <!-- Día de la semana -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">Día de la semana</label>
+          <select
+            formControlName="weekday"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+          >
+            <option value="">Selecciona un día</option>
+            <option *ngFor="let d of diasSemana" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+
+        <!-- Hidden User ID -->
+        <input type="hidden" formControlName="user_id" value="{{user!.id}}"/>
+
+        <!-- Ejercicios dinámicos -->
+        <div formArrayName="exercises" class="mb-4">
+          <div *ngFor="let exercise of exercises.controls; let i = index" [formGroupName]="i" class="mb-4">
+            <div class="mb-2">
+              <label class="block text-gray-700 font-semibold mb-1">Ejercicio {{ i + 1 }} - Nombre</label>
+              <input
+                formControlName="name"
+                type="text"
+                placeholder="Ej: Flexiones"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="block text-gray-700 font-semibold mb-1">Descripción</label>
+              <input
+                formControlName="description"
+                type="text"
+                placeholder="Ej: Flexión de brazos"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="block text-gray-700 font-semibold mb-1">Sets</label>
+              <input
+                formControlName="sets"
+                type="number"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="block text-gray-700 font-semibold mb-1">Reps</label>
+              <input
+                formControlName="reps"
+                type="number"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="block text-gray-700 font-semibold mb-1">Peso</label>
+              <input
+                formControlName="weight"
+                type="number"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
+              />
+            </div>
+
+            <button type="button" (click)="removeExercise(i)" class="text-red-600 mt-2">Eliminar ejercicio</button>
+          </div>
+        </div>
+        
+        <button type="button" (click)="addExercise()" class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition mt-4">
+          Agregar ejercicio
+        </button>
+
+        <!-- Botón de enviar -->
+        <button
+          type="submit"
+          class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition mt-4"
+        >
+          Crear entrenamiento
+        </button>
+      </form>
+    </div>
+  </main>
+  <footer></footer>
+</div>
+
+
+

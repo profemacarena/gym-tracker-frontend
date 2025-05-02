@@ -1,0 +1,242 @@
+<app-logged-navbar></app-logged-navbar>
+
+<div class="min-h-screen flex flex-col">
+    <main class="flex-1 p-6 bg-gray-100">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="text-3xl font-bold text-teal-700 mb-6">Mis entrenamientos</h1>
+  
+        <div *ngIf="workouts.length === 0" class="text-center text-gray-600">
+          No tienes entrenamientos todavía.
+        </div>
+  
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            *ngFor="let workout of workouts"
+            class="relative bg-gray-200 hover:bg-gray-300 transition rounded-xl shadow-md p-4 border border-gray-300 group"
+          >
+            <h2 class="text-xl font-semibold text-teal-800 mb-2">{{ workout.name|titlecase }}</h2>
+            <p class="text-sm text-gray-700 mb-1"><strong>Tipo:</strong> {{ workout.type|titlecase }}</p>
+            <p class="text-sm text-gray-700 mb-1"><strong>Tren:</strong> {{ workout.train|titlecase }}</p>
+            <p class="text-sm text-gray-700 mb-3"><strong>Día:</strong> {{ workout.weekday|titlecase }}</p>
+  
+            <!-- Botones en escritorio (hover) -->
+            <div
+              class="hidden sm:flex justify-between mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            >
+              <button
+                class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+                (click)="onView(workout)"
+              >
+                Ver
+              </button>
+              <button
+                class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition"
+                (click)="onEdit(workout)"
+              >
+                Editar
+              </button>
+              <button
+                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                (click)="onDelete(workout.id)"
+              >
+                Eliminar
+              </button>
+            </div>
+  
+            <!-- Botón ⋮ en móvil -->
+            <div class="absolute top-2 right-2 sm:hidden">
+              <button
+                (click)="toggleMenu(workout.id)"
+                class="text-gray-600 hover:text-gray-800 focus:outline-none"
+              >
+                ⋮
+              </button>
+  
+              <div
+                *ngIf="openMenuId === workout.id"
+                class="absolute right-0 mt-2 w-36 bg-white border border-gray-300 rounded shadow-md z-10"
+              >
+                <button
+                  class="block w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100"
+                  (click)="onView(workout); closeMenu()"
+                >
+                  Ver detalles
+                </button>
+                <button
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  (click)="onEdit(workout); closeMenu()"
+                >
+                  Editar
+                </button>
+                <button
+                  class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  (click)="onDelete(workout.id); closeMenu()"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+<!-- Modal de detalles -->
+<div
+  *ngIf="selectedWorkoutExercises && selectedWorkoutExercises.length > 0"
+  class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-teal-950/30"
+  (click)="closeModal()"
+>
+  <div
+    class="bg-teal-900 w-full max-w-xl mx-4 rounded-2xl shadow-xl p-6 relative border border-teal-700"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-3xl font-bold text-teal-100 mb-4 tracking-wide">
+      {{ selectedworkout?.name| titlecase }}
+    </h2>
+
+    <p class="mb-2 text-teal-300">
+      <strong>Tipo:</strong> {{ selectedworkout!.type | titlecase }}
+    </p>
+    <p class="mb-2 text-teal-300">
+      <strong>Tren:</strong> {{ selectedworkout!.train | titlecase }}
+    </p>
+    <p class="mb-4 text-teal-300">
+      <strong>Día:</strong> {{ selectedworkout!.weekday | titlecase }}
+    </p>
+
+    <h3 class="text-xl font-semibold text-teal-200 mb-3">📋 Ejercicios</h3>
+
+    <ul class="space-y-3 max-h-64 overflow-y-auto pr-1">
+      <li *ngFor="let e of selectedWorkoutExercises" class="border-b border-teal-700 pb-2">
+        <p class="text-teal-100 font-medium text-lg">{{ e.exercise.name| titlecase }}</p>
+        <p class="text-sm text-teal-400 italic" *ngIf="e.exercise.description">"{{ e.exercise.description }}"</p>
+        <div class="text-sm text-teal-300 mt-1">
+          <span><strong>Series:</strong> {{ e.sets }}</span> |
+          <span><strong>Reps:</strong> {{ e.reps }}</span> |
+          <span><strong>Peso:</strong> {{ e.weight }} kg</span>
+        </div>
+      </li>
+    </ul>
+
+    <button
+      class="absolute top-3 right-3 text-teal-300 hover:text-white text-2xl transition"
+      (click)="closeModal()"
+      aria-label="Cerrar"
+    >
+      ✕
+    </button>
+  </div>
+</div>
+
+
+
+<!-- Modal de edición -->
+
+<div
+  *ngIf="isEditModalOpen"
+  class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-teal-950/30"
+  (click)="closeEditModal()"
+>
+  <div
+    class="bg-teal-900 w-full max-w-xl mx-4 rounded-2xl shadow-xl p-6 relative border border-teal-700"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-3xl font-bold text-teal-100 mb-4 tracking-wide">
+      Editar entrenamiento
+    </h2>
+
+    <form [formGroup]="editForm" (ngSubmit)="saveChanges()">
+      <div class="mb-4">
+        <label for="name" class="block text-teal-200 font-semibold mb-2">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="w-full p-3 rounded-lg bg-teal-800 text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          placeholder="Nombre del entrenamiento"
+        />
+        <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched" class="text-red-400 text-sm mt-1">
+          El nombre es obligatorio.
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="type" class="block text-teal-200 font-semibold mb-2">Tipo</label>
+        <input
+          id="type"
+          type="text"
+          formControlName="type"
+          class="w-full p-3 rounded-lg bg-teal-800 text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          placeholder="Tipo de entrenamiento"
+        />
+        <div *ngIf="editForm.get('type')?.invalid && editForm.get('type')?.touched" class="text-red-400 text-sm mt-1">
+          El tipo es obligatorio.
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="train" class="block text-teal-200 font-semibold mb-2">Tren</label>
+        <input
+          id="train"
+          type="text"
+          formControlName="train"
+          class="w-full p-3 rounded-lg bg-teal-800 text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          placeholder="Tren de entrenamiento"
+        />
+        <div *ngIf="editForm.get('train')?.invalid && editForm.get('train')?.touched" class="text-red-400 text-sm mt-1">
+          El tren es obligatorio.
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="weekday" class="block text-teal-200 font-semibold mb-2">Día</label>
+        <input
+          id="weekday"
+          type="text"
+          formControlName="weekday"
+          class="w-full p-3 rounded-lg bg-teal-800 text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          placeholder="Día de la semana"
+        />
+        <div *ngIf="editForm.get('weekday')?.invalid && editForm.get('weekday')?.touched" class="text-red-400 text-sm mt-1">
+          El día es obligatorio.
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-between mt-6">
+        <button
+          type="button"
+          class="bg-teal-600 text-teal-100 px-6 py-2 rounded-lg hover:bg-teal-500 transition"
+          (click)="closeEditModal()"
+        >
+          Cerrar
+        </button>
+        <button
+          type="submit"
+          class="bg-teal-500 text-teal-100 px-6 py-2 rounded-lg hover:bg-teal-400 transition"
+          [disabled]="editForm.invalid"
+        >
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+      
