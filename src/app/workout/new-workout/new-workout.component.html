@@ -44,7 +44,7 @@
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
           >
             <option value="">Selecciona un día</option>
-            <option *ngFor="let d of diasSemana" [value]="d">{{ d }}</option>
+            <option *ngFor="let d of diasSemana" [value]="d">{{ d|titlecase }}</option>
           </select>
         </div>
 

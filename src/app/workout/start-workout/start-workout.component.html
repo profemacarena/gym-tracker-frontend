@@ -1,0 +1,76 @@
+<app-logged-navbar></app-logged-navbar>
+<div *ngIf="currentExercise" class="min-h-screen bg-white p-4 flex flex-col items-center text-gray-800">
+  <div class="w-full max-w-xl mb-6">
+    <h1 class="text-2xl font-bold text-teal-700 mb-2">Entrenamiento en curso</h1>
+
+    <div class="w-full bg-teal-100 rounded-full h-3 mb-4">
+      <div 
+        class="bg-teal-500 h-3 rounded-full transition-all duration-300"
+        [style.width.%]="(currentExerciseIndex / exercises.length) * 100">
+      </div>
+    </div>
+
+    <p class="text-sm text-teal-600">
+      Ejercicio {{ currentExerciseIndex + 1 }} de {{ exercises.length }} - Serie {{ currentExercise.currentSet }} de {{ currentExercise.sets }}
+    </p>
+  </div>
+
+  <!-- Card del ejercicio actual -->
+  <div class="w-full max-w-xl bg-teal-50 rounded-2xl shadow p-6 mb-6">
+    <h2 class="text-xl font-semibold text-teal-700 mb-4">{{ currentExercise.exercise.name }}</h2>
+
+    <form class="space-y-4" (ngSubmit)="registrarSerie()">
+      <div>
+        <label class="block text-sm text-teal-700 mb-1" for="peso">Peso (kg)</label>
+        <input type="number" [(ngModel)]="currentExercise.nuevaSerie.weight" name="peso" required
+          class="w-full p-3 rounded-lg border border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+      </div>
+
+      <div>
+        <label class="block text-sm text-teal-700 mb-1" for="reps">Repeticiones</label>
+        <input type="number" [(ngModel)]="currentExercise.nuevaSerie.reps" name="reps" required
+          class="w-full p-3 rounded-lg border border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+      </div>
+
+      <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-xl transition">
+        Guardar serie
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Mensaje final -->
+<!-- Final del entrenamiento -->
+<div *ngIf="currentExerciseIndex >= exercises.length" class="min-h-screen p-6 bg-gray-100 text-teal-800">
+  <h2 class="text-3xl font-bold mb-10 text-center text-teal-700">✅ Entrenamiento finalizado</h2>
+
+  <div *ngFor="let exercise of exercises" class="mb-12">
+    <div class="bg-white rounded-2xl shadow-lg p-6 border border-teal-100 hover:shadow-xl transition-shadow">
+      <h3 class="text-2xl font-semibold text-teal-600 mb-6 border-b border-teal-200 pb-2 flex items-center gap-2">
+<svg width="20px" height="20px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.cls-1{fill:none;stroke:#009689;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><polygon class="cls-1" points="14.15 22.5 3.41 22.5 3.41 1.5 20.59 1.5 20.59 22.5 14.15 22.5"></polygon><line class="cls-1" x1="6.27" y1="11.05" x2="8.18" y2="11.05"></line><line class="cls-1" x1="10.09" y1="11.05" x2="17.73" y2="11.05"></line><line class="cls-1" x1="6.27" y1="14.86" x2="8.18" y2="14.86"></line><line class="cls-1" x1="10.09" y1="14.86" x2="17.73" y2="14.86"></line><line class="cls-1" x1="6.27" y1="18.68" x2="8.18" y2="18.68"></line><line class="cls-1" x1="10.09" y1="18.68" x2="17.73" y2="18.68"></line><line class="cls-1" x1="7.23" y1="6.27" x2="16.77" y2="6.27"></line><line class="cls-1" x1="9.14" y1="4.36" x2="9.14" y2="8.18"></line><line class="cls-1" x1="14.86" y1="4.36" x2="14.86" y2="8.18"></line></g></svg>        {{ exercise.exercise.name }}
+      </h3>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+          <thead>
+            <tr class="bg-teal-600 text-white">
+              <th class="py-3 px-4 rounded-tl-lg">Serie</th>
+              <th class="py-3 px-4">Repeticiones</th>
+              <th class="py-3 px-4 rounded-tr-lg">Peso (kg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let serie of exercise.log" class="even:bg-teal-50 hover:bg-teal-100 transition-colors">
+              <td class="py-3 px-4 font-medium text-teal-800">{{ serie.set_number }}</td>
+              <td class="py-3 px-4">{{ serie.reps }}</td>
+              <td class="py-3 px-4">{{ serie.weight }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

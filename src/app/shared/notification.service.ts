@@ -58,27 +58,24 @@ export class NotificacionService {
     });
   }
 
-  // Mostrar un modal de confirmación con botones
   confirm(mensaje: string, onConfirm: () => void, onCancel: () => void) {
     const modalId = 'confirmation-modal';
     const modal = document.getElementById(modalId);
     if (modal) {
-      modal.classList.remove('hidden'); // Mostrar el modal
+      modal.classList.remove('hidden');
     }
     
-    // Pasamos el mensaje al modal
     const messageElement = document.getElementById('modal-message');
     if (messageElement) {
       messageElement.innerText = mensaje;
     }
 
-    // Asegurarnos de que no se registren múltiples event listeners
     if (!this.isEventListenerAdded) {
       const confirmButton = document.getElementById('confirm-button');
       confirmButton?.addEventListener('click', () => {
         onConfirm();
         if (modal) {
-          modal.classList.add('hidden'); // Ocultar el modal
+          modal.classList.add('hidden'); 
         }
       });
 
@@ -86,11 +83,9 @@ export class NotificacionService {
       cancelButton?.addEventListener('click', () => {
         onCancel();
         if (modal) {
-          modal.classList.add('hidden'); // Ocultar el modal
+          modal.classList.add('hidden'); 
         }
       });
-
-      // Marcamos que ya se han agregado los event listeners
       this.isEventListenerAdded = true;
     }
   }

@@ -31,6 +31,9 @@ export class WorkoutService {
   getWorkoutsByUser(idUser:number){
     return this.http.get<Workout[]>(`${this.apiUrl}/workouts/user/${idUser}`);
   }
+   getWorkoutsAndExercisesByUser(idUser:number){
+     return this.http.get<any[]>(`${this.apiUrl}/workouts/user/${idUser}`);
+   }
   getWorkoutsByUserAndType(idUser:number,type:string){
     return this.http.get<Workout[]>(`${this.apiUrl}/workouts/user/${idUser}/type/${type}`);
   }
@@ -82,13 +85,39 @@ export class WorkoutService {
   }
   
   getExercisesByWorkout(workoutId: number) {
-    return this.http.get<WorkoutExercise>(`${this.apiUrl}/workouts/${workoutId}/exercises`);
+    return this.http.get<any[]>(`${this.apiUrl}/workouts/${workoutId}/exercises`);
   }
   getWorkoutsByExercise(exerciseId: number) {
     return this.http.get<Workout[]>(`${this.apiUrl}/exercises/${exerciseId}/workouts`);
   }
-    
+  //relacion workout_exercises-exercise_logs
 
+    
+ // Obtener logs de un ejercicio en un workout
+  getExerciseLogs(workoutExerciseId: number) {
+    return this.http.get(`${this.apiUrl}/workout-exercises/${workoutExerciseId}/logs`);
+  }
+
+  // Registrar una nueva serie (log) en un ejercicio
+  addExerciseLog(data: {
+    workout_exercise_id: number;
+    set_number: number;
+    reps: number;
+    weight: number;
+  }) {
+    return this.http.post(this.apiUrl+'/exercise-log', data);
+  }
+
+
+  // Actualizar un log de ejercicio existente
+  updateExerciseLog(logId: number, data: { reps?: number; weight?: number }) {
+    return this.http.patch(`${this.apiUrl}/exercise-logs/${logId}`, data);
+  }
+
+  // Eliminar un log de ejercicio
+  deleteExerciseLog(logId: number) {
+    return this.http.delete(`${this.apiUrl}/exercise-logs/${logId}`);
+  }
   
 
 }

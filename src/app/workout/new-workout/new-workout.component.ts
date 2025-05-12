@@ -16,7 +16,7 @@ export class NewWorkoutComponent {
     entrenamientoForm: FormGroup;
 
     formularioEnviado = false;
-    diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    diasSemana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
   
     constructor(private fb: FormBuilder, private workoutService: WorkoutService,private authService:AuthService,private notify:NotificacionService) {
       this.user=this.authService.currentUser;

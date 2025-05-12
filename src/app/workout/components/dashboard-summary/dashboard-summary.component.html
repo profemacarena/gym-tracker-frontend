@@ -1,24 +1,35 @@
 <div class="flex flex-col justify-between bg-teal-900">
-    <div class="p-7 mx-5 md:mx-10">
-      <h4 class="text-2xl md:text-5xl text-white font-bold">Vamos, {{user?.name}} {{fraseSeleccionada}}</h4>
+  <!-- Título + Botón -->
+  <div class="p-7 mx-5 md:mx-10">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <h4 class="text-2xl md:text-5xl text-white font-bold">
+        Vamos, {{ user?.name }} {{ fraseSeleccionada }}
+      </h4>
+      <a *ngIf="entrenamiento?.train"
+      [routerLink]="['/workout/start', entrenamiento?.id]"
+      class="text-white bg-teal-600 hover:bg-teal-500 transition-colors font-semibold rounded-lg px-5 py-2 text-center w-full md:w-auto text-sm md:text-base"
+      >
+        Comenzar entrenamiento
+      </a>
     </div>
-  
-    <div class="relative flex flex-col mx-auto my-6 bg-teal-700 shadow-sm border border-teal-700 rounded-lg w-4/5">
-        <div class="mx-3 mb-0 border-b border-teal-500 pt-3 pb-2 px-1">
-          <span class="text-sm text-white font-medium">
-            📅{{fechaHoy}}
-          </span>
-        </div>
-      
-        <div class="p-4">
-          <h5 class="mb-2 text-white text-3xl font-semibold">
-            Hoy toca 
-          </h5>
-          <p class="text-white leading-normal font-light">
-            The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to Naviglio where you can enjoy the main night life in Barcelona.
-          </p>
-        </div>
-      </div>
-      
   </div>
-  
+
+  <!-- Tarjeta del entrenamiento -->
+  <div class="relative flex flex-col mx-auto my-6 bg-teal-700 shadow-sm border border-teal-700 rounded-lg w-11/12 md:w-4/5">
+    <div class="mx-3 mb-0 border-b border-teal-500 pt-3 pb-2 px-1">
+      <span class="text-sm text-white font-medium">📅{{ fechaHoy }}</span>
+    </div>
+
+    <div class="p-4">
+      <h5 class="mb-2 text-white text-2xl md:text-3xl font-semibold">
+        Hoy toca <span class="font-bold">{{ entrenamiento?.name | lowercase }}</span><span class="font-bold" *ngIf="!entrenamiento?.name">descanso</span>
+      </h5>
+      <p *ngIf="entrenamiento?.train" class="text-white leading-normal font-light">
+        Hoy entrenarás el tren <span class="font-bold">{{ entrenamiento?.train | lowercase }}</span> con una rutina de tipo <span class="font-bold">{{ entrenamiento?.type | lowercase }}</span>. ¡Prepárate para darlo todo!
+      </p>
+      <p *ngIf="!entrenamiento?.train" class="text-white leading-normal font-light">
+        No se entrena, ¡pero el próximo día vamos a tope!
+      </p>
+    </div>
+  </div>
+</div>
