@@ -25,13 +25,9 @@ export class NewWorkoutComponent {
         type: ['', [Validators.required]],
         train: ['', [Validators.required]],
         weekday: ['', [Validators.required]],
-        user_id: [this.user!.id], // Asumimos que el user_id es el id del usuario actual
+        user_id: [this.user!.id], 
         exercises: this.fb.array([this.createExercise()])
       });
-    }
-  
-    ngOnInit(): void {
-      
     }
   
     get exercises() {
@@ -57,9 +53,12 @@ export class NewWorkoutComponent {
     }
   
     onSubmit() {
-      if (this.entrenamientoForm.invalid) {
-        return;
-      }
+  this.formularioEnviado = true;
+
+  if (this.entrenamientoForm.invalid) {
+    this.entrenamientoForm.markAllAsTouched(); 
+    return;
+  }
   
       const formValue = this.entrenamientoForm.value;
   
@@ -73,7 +72,6 @@ export class NewWorkoutComponent {
   
       const exercises = formValue.exercises;
   
-      // Paso 1: Crear el workout junto con los ejercicios
       this.workoutService.createWorkoutWithExercises({
         workout: workoutData,
         exercises

@@ -1,3 +1,3 @@
 export const environment={
-    apiUrl: 'http://gymtracker.test/api'
+    apiUrl: 'https://gym-tracker-backend-main-db8bom.laravel.cloud/api'
 }

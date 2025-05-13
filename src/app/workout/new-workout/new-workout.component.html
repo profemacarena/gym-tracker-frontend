@@ -5,57 +5,79 @@
       <form [formGroup]="entrenamientoForm" (ngSubmit)="onSubmit()">
         <!-- Nombre -->
         <div class="mb-4">
-          <label class="block text-gray-700 font-semibold mb-2">Nombre del entrenamiento</label>
-          <input
-            formControlName="name"
-            type="text"
-            placeholder="Ej: Pecho-Triceps"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
-          />
-        </div>
+  <label class="block text-gray-700 font-semibold mb-2">Nombre del entrenamiento</label>
+  <input
+    formControlName="name"
+    type="text"
+    placeholder="Ej: Pecho-Triceps"
+    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+    [ngClass]="{ 'border-red-500': entrenamientoForm.get('name')?.invalid && (entrenamientoForm.get('name')?.touched || formularioEnviado) }"
+  />
+  <div class="text-red-500 text-sm mt-1" *ngIf="entrenamientoForm.get('name')?.invalid && (entrenamientoForm.get('name')?.touched || formularioEnviado)">
+    El nombre del entrenamiento es obligatorio.
+  </div>
+</div>
 
-        <!-- Tipo -->
-        <div class="mb-4">
-          <label class="block text-gray-700 font-semibold mb-2">Tipo</label>
-          <input
-            formControlName="type"
-            type="text"
-            placeholder="Ej: Fuerza"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
-          />
-        </div>
+<!-- Tipo -->
+<div class="mb-4">
+  <label class="block text-gray-700 font-semibold mb-2">Tipo</label>
+  <input
+    formControlName="type"
+    type="text"
+    placeholder="Ej: Fuerza"
+    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+    [ngClass]="{ 'border-red-500': entrenamientoForm.get('type')?.invalid && (entrenamientoForm.get('type')?.touched || formularioEnviado) }"
+  />
+  <div class="text-red-500 text-sm mt-1" *ngIf="entrenamientoForm.get('type')?.invalid && (entrenamientoForm.get('type')?.touched || formularioEnviado)">
+    El tipo es obligatorio.
+  </div>
+</div>
 
-        <!-- Tren -->
-        <div class="mb-4">
-          <label class="block text-gray-700 font-semibold mb-2">Tren</label>
-          <input
-            formControlName="train"
-            type="text"
-            placeholder="Ej: Superior"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
-          />
-        </div>
+<!-- Tren -->
+<div class="mb-4">
+  <label class="block text-gray-700 font-semibold mb-2">Tren</label>
+  <input
+    formControlName="train"
+    type="text"
+    placeholder="Ej: Superior"
+    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+    [ngClass]="{ 'border-red-500': entrenamientoForm.get('train')?.invalid && (entrenamientoForm.get('train')?.touched || formularioEnviado) }"
+  />
+  <div class="text-red-500 text-sm mt-1" *ngIf="entrenamientoForm.get('train')?.invalid && (entrenamientoForm.get('train')?.touched || formularioEnviado)">
+    Este campo es obligatorio.
+  </div>
+</div>
 
-        <!-- Día de la semana -->
-        <div class="mb-4">
-          <label class="block text-gray-700 font-semibold mb-2">Día de la semana</label>
-          <select
-            formControlName="weekday"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
-          >
-            <option value="">Selecciona un día</option>
-            <option *ngFor="let d of diasSemana" [value]="d">{{ d|titlecase }}</option>
-          </select>
-        </div>
+<!-- Día de la semana -->
+<div class="mb-4">
+  <label class="block text-gray-700 font-semibold mb-2">Día de la semana</label>
+  <select
+    formControlName="weekday"
+    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+    [ngClass]="{ 'border-red-500': entrenamientoForm.get('weekday')?.invalid && (entrenamientoForm.get('weekday')?.touched || formularioEnviado) }"
+  >
+    <option value="">Selecciona un día</option>
+    <option *ngFor="let d of diasSemana" [value]="d">{{ d | titlecase }}</option>
+  </select>
+  <div class="text-red-500 text-sm mt-1" *ngIf="entrenamientoForm.get('weekday')?.invalid && (entrenamientoForm.get('weekday')?.touched || formularioEnviado)">
+    Debes seleccionar un día de la semana.
+  </div>
+</div>
 
         <!-- Hidden User ID -->
-        <input type="hidden" formControlName="user_id" value="{{user!.id}}"/>
+        <input type="hidden" formControlName="user_id" value="{{ user!.id }}" />
 
         <!-- Ejercicios dinámicos -->
         <div formArrayName="exercises" class="mb-4">
-          <div *ngFor="let exercise of exercises.controls; let i = index" [formGroupName]="i" class="mb-4">
+          <div
+            *ngFor="let exercise of exercises.controls; let i = index"
+            [formGroupName]="i"
+            class="mb-4"
+          >
             <div class="mb-2">
-              <label class="block text-gray-700 font-semibold mb-1">Ejercicio {{ i + 1 }} - Nombre</label>
+              <label class="block text-gray-700 font-semibold mb-1"
+                >Ejercicio {{ i + 1 }} - Nombre</label
+              >
               <input
                 formControlName="name"
                 type="text"
@@ -64,7 +86,9 @@
               />
             </div>
             <div class="mb-2">
-              <label class="block text-gray-700 font-semibold mb-1">Descripción</label>
+              <label class="block text-gray-700 font-semibold mb-1"
+                >Descripción</label
+              >
               <input
                 formControlName="description"
                 type="text"
@@ -97,18 +121,28 @@
               />
             </div>
 
-            <button type="button" (click)="removeExercise(i)" class="text-red-600 mt-2">Eliminar ejercicio</button>
+            <button
+              type="button"
+              (click)="removeExercise(i)"
+              class="text-red-600 mt-2"
+            >
+              Eliminar ejercicio
+            </button>
           </div>
         </div>
-        
-        <button type="button" (click)="addExercise()" class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition mt-4">
+
+        <button
+          type="button"
+          (click)="addExercise()"
+          class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition mt-4"
+        >
           Agregar ejercicio
         </button>
 
-        <!-- Botón de enviar -->
         <button
           type="submit"
-          class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition mt-4"
+          [disabled]="entrenamientoForm.invalid"
+          class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Crear entrenamiento
         </button>
@@ -117,6 +151,3 @@
   </main>
   <footer></footer>
 </div>
-
-
-

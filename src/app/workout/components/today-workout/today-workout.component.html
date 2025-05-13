@@ -1,37 +1,47 @@
-<div class="w-full bg-teal-900 py-10">
-    <div class="w-4/5 mx-auto">
-        <div *ngIf="todayWorkout?.workout_exercises?.length > 0; else sinEjercicios"
-           class="mt-4 p-8 bg-teal-700 rounded-2xl shadow-2xl">
-       
-        <div class="flex items-center mb-6">
-          <h3 class="text-2xl text-white font-bold">Ejercicios de hoy</h3>
-        </div>
-  
-        <div class="space-y-6">
-          <div *ngFor="let e of todayWorkout.workout_exercises"
-               class="flex flex-col sm:flex-row justify-between bg-white rounded-xl p-6 border-2 border-teal-600 hover:shadow-lg transition-shadow">
-            
-            <div class="flex-1">
-              <p class="text-teal-900 text-xl font-semibold mb-1">{{ e.exercise.name | titlecase }}</p>
-              <p class="text-gray-600 text-sm mb-2">{{ e.exercise.description }}</p>
-              <p class="text-gray-500 text-xs italic">Grupo: {{ e.exercise.muscle_group }}</p>
-            </div>
-            
-            <div class="mt-4 sm:mt-0 sm:ml-6 text-right">
-              <p class="text-teal-900 text-md"><span class="font-medium">Series:</span> {{ e.sets }}</p>
-              <p class="text-teal-900 text-md"><span class="font-medium">Reps:</span> {{ e.reps }}</p>
-              <p class="text-teal-900 text-md"><span class="font-medium">Peso:</span> {{ e.weight }} kg</p>
-            </div>
+<div class="w-full bg-teal-900 py-10 min-h-screen">
+  <div class="w-4/5 mx-auto">
+    <div
+      *ngIf="todayWorkout?.workout_exercises?.length > 0; else sinEjercicios"
+      class="mt-4 p-8 bg-teal-700 rounded-2xl shadow-2xl"
+    >
+      <div class="flex items-center mb-6">
+        <h3 class="text-2xl text-white font-bold">Ejercicios de hoy</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div
+          *ngFor="let e of todayWorkout.workout_exercises"
+          class="flex flex-col sm:flex-row justify-between bg-white rounded-xl p-6 border-2 border-teal-600 hover:shadow-lg transition-shadow"
+        >
+          <div class="flex-1">
+            <p class="text-teal-900 text-xl font-semibold mb-1">
+              {{ e.exercise.name | titlecase }}
+            </p>
+            <p class="text-gray-600 text-sm mb-2">{{ e.exercise.description }}</p>
+
+          </div>
+
+          <div class="mt-4 sm:mt-0 sm:ml-6 text-right">
+            <p class="text-teal-900 text-md">
+              <span class="font-medium">Series:</span> {{ e.sets }}
+            </p>
+            <p class="text-teal-900 text-md">
+              <span class="font-medium">Reps:</span> {{ e.reps }}
+            </p>
+            <p class="text-teal-900 text-md">
+              <span class="font-medium">Peso:</span> {{ e.weight }} kg
+            </p>
           </div>
         </div>
       </div>
-  
-      <ng-template #sinEjercicios>
-        <div class="mt-8 p-8 bg-white rounded-2xl shadow-lg text-center border border-teal-600">
-          <p class="text-teal-900 text-lg italic">No hay ejercicios para hoy.</p>
-        </div>
-      </ng-template>
-  
     </div>
+
+    <ng-template #sinEjercicios>
+      <div
+        class="mt-8 p-8 bg-white rounded-2xl shadow-lg text-center border border-teal-600"
+      >
+        <p class="text-teal-900 text-lg italic">No hay ejercicios para hoy.</p>
+      </div>
+    </ng-template>
   </div>
-  
+</div>
