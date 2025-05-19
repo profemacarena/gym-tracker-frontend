@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificacionService } from '../../shared/notification.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'auth-login',
@@ -22,24 +24,38 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onLoginSubmit(): void {
-    if (this.loginForm.valid) {
-      const {email,password}=this.loginForm.value;
-      this.authService.login(email,password).subscribe({
-        next:(user)=>{
-          this.notify.success('Login Correcto');
-          setTimeout(() => {
-            this.router.navigate(['/workout/']);
-          }, 1000);
-        },
-        error:(err)=>{
-          this.notify.error("Credenciales incorrectas");
-          console.error('Error en login:', err);
-        }
-      })
 
-    }else{
-      this.notify.error("Los datos no son válidos")
-    }
+onLoginSubmit(): void {
+  if (this.loginForm.valid) {
+    const { email, password } = this.loginForm.value;
+
+    // Mostrar el spinner de carga
+    Swal.fire({
+      title: 'Iniciando sesión...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.authService.login(email, password).subscribe({
+      next: (user) => {
+        Swal.close(); // Cerrar el spinner
+        this.notify.success('Login Correcto');
+        setTimeout(() => {
+          this.router.navigate(['/workout/']);
+        }, 1000);
+      },
+      error: (err) => {
+        Swal.close(); // Cerrar el spinner
+        this.notify.error('Credenciales incorrectas');
+        console.error('Error en login:', err);
+      }
+    });
+
+  } else {
+    this.notify.error('Los datos no son válidos');
   }
+}
+
 }
