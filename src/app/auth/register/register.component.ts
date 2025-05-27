@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NotificacionService } from '../../shared/notification.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-register',
@@ -36,24 +38,36 @@ export class RegisterComponent implements OnInit {
       : { mismatch: true };
   }
 
-  onRegisterSubmit(): void {
-    if (this.registerForm.valid) {
-      const { username, name, lastname, email, password } = this.registerForm.value;
-      
-      this.authService.register(username, name, lastname, email, password).subscribe(
-        (user) => {
-          this.notify.success("Registro exitoso")
-          setTimeout(() => {
-            this.router.navigate(['/auth/login']);
-          }, 3000);
-        },
-        (error) => {
-          this.notify.error("El correo electrónico o nombre de usuario ya existe")
-        }
-      );
-    }else {
-      this.registerForm.markAllAsTouched();
-      this.notify.error("Por favor, rellena todos los campos correctamente");
-    }
+onRegisterSubmit(): void {
+  if (this.registerForm.valid) {
+    const { username, name, lastname, email, password } = this.registerForm.value;
+
+    // Mostrar el spinner de carga
+    Swal.fire({
+      title: 'Registrando usuario...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.authService.register(username, name, lastname, email, password).subscribe(
+      (user) => {
+        Swal.close(); // Cerrar el spinner
+        this.notify.success("Registro exitoso");
+        setTimeout(() => {
+          this.router.navigate(['/auth/login']);
+        }, 3000);
+      },
+      (error) => {
+        Swal.close(); // Cerrar el spinner
+        this.notify.error("El correo electrónico o nombre de usuario ya existe");
+      }
+    );
+  } else {
+    this.registerForm.markAllAsTouched();
+    this.notify.error("Por favor, rellena todos los campos correctamente");
   }
+}
+
 }

@@ -49,7 +49,6 @@ onLoginSubmit(): void {
       error: (err) => {
         Swal.close(); // Cerrar el spinner
         this.notify.error('Credenciales incorrectas');
-        console.error('Error en login:', err);
       }
     });
 
