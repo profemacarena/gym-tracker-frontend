@@ -8,7 +8,7 @@ Aplicación web desarrollada con Angular para usuarios de gimnasio que buscan **
 
 ![Home](https://i.ibb.co/84dWx2Fk/Home.png)
 
-![Sesión iniciada](https://i.ibb.co/Dfkv5pG6/Logged.png)
+![Sesión iniciada](https://i.ibb.co/Ndb8C5RL/Logged.png)
 
 ---
 
